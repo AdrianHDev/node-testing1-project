@@ -51,6 +51,8 @@ class Counter {
    */
   constructor(initialNumber) {
     // ✨ initialize whatever properties are needed
+    this.count = initialNumber;
+    this.initialized = false;
   }
 
   /**
@@ -66,7 +68,11 @@ class Counter {
    * counter.countDown() // returns 0
    */
   countDown() {
-    // ✨ implement
+    if (!this.initialized) {
+      this.initialized = true;
+      return this.count;
+    }
+    return this.count > 0 ? --this.count : this.count  
   }
 }
 
@@ -76,6 +82,8 @@ class Seasons {
    */
   constructor() {
     // ✨ initialize whatever properties are needed
+    this.seasons = ['summer', 'fall', 'winter', 'spring']
+    this.season = 'spring'
   }
 
   /**
@@ -92,6 +100,13 @@ class Seasons {
    */
   next() {
     // ✨ implement
+    if (this.season === 'spring') {
+      this.season = this.seasons[0]
+    } else {
+      this.season = this.seasons[this.seasons.indexOf(this.season) + 1]
+    }
+    return this.season;
+
   }
 }
 

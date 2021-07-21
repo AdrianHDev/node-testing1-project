@@ -53,16 +53,16 @@ describe("[Exercise 4] Counter", () => {
     expect(result).toBe(2);
   })
   test('[8] the count eventually reaches zero but does not go below zero', () => {
-    let count = 1; 
-    jest.useFakeTimers();
+    let count = 1;
+    jest.useFakeTimers(); // setTimeout doesn't work without this in jest for some reason. See: 
     let timeout = setTimeout(function() {
-      count = 0
+      clearTimeout(timeout);
+      timeout = undefined;
     }, 3000)
-    jest.runAllTimers();
-    while (count !== 0) {
+    jest.runAllTimers(); // the timer won't actually run without this.
+    while (count !== 0 && timeout ) { // WHEN TIMER DIES OR 0 IS REACHED, BREAK FREE
       count = counter.countDown();
     }
-    clearTimeout(timeout);
     expect(count).toBe(0);
   })
 });

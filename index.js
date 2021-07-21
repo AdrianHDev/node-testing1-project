@@ -121,11 +121,14 @@ class Car {
     this.odometer = 0 // car initilizes with zero miles
     this.tank = tankSize // car initiazes full of gas
     // ✨ initialize whatever other properties are needed
+    this.tankSize = tankSize;
+    this.name = name;
+    this.mpg = mpg;
   }
 
   /**
    * [Exercise 6B] Car.prototype.drive adds miles to the odometer and consumes fuel according to mpg
-   * @param {string} distance - the distance we want the car to drive
+   * @param {number} distance - the distance we want the car to drive
    * @returns {number} - the updated odometer value
    *
    * EXAMPLE
@@ -136,8 +139,17 @@ class Car {
    * focus.drive(200) // returns 500
    * focus.drive(200) // returns 600 (ran out of gas after 100 miles)
    */
-  drive(distance) {
-    // ✨ implement
+  drive(distance) { 
+    while ( distance !== 0 ) {
+      if (0 <= this.tank * this.mpg) {
+        distance -= (1);
+        this.odometer += 1;
+        this.tank -= 1/this.mpg
+      } else {
+        distance = 0;
+      }
+    }
+    return this.odometer
   }
 
   /**
@@ -152,7 +164,8 @@ class Car {
    * focus.refuel(99) // returns 600 (tank only holds 20)
    */
   refuel(gallons) {
-    // ✨ implement
+    this.tank = clamp(this.tank + gallons, 0, this.tankSize);
+    return this.mpg * this.tank;
   }
 }
 
@@ -170,7 +183,13 @@ class Car {
  * })
  */
 function isEvenNumberAsync(number) {
-  // ✨ implement
+  return new Promise((res,) => {
+    res((number % 2) === 0 ? true : false )
+  })
+}
+
+const clamp = (num, min, max) => {
+  return Math.min(Math.max(num, min), max);
 }
 
 module.exports = {
